@@ -30,18 +30,30 @@ class SuratKeteranganDokterForm
 
                 Section::make('Informasi Surat')
                 ->schema([
+                    Select::make('id_regis_skd')
+                        ->relationship('RegisSkd', 'nomor_kir')
+                         ->createOptionForm([
+                                    DatePicker::make('tanggal')->required(),
+                                    TextInput::make('nomor_kir')->required(),
+                                    TextInput::make('keperluan')->required(),
+                                    TextInput::make('penerima')->required(),
+                            ])
+                            ->searchable()
+                            // ->live()
+                            ->preload()
+                            ->required(),
                     TextInput::make('no_reg')
                         ->label('No Registrasi')
                         ->unique(ignoreRecord: true),
 
-                    TextInput::make('no_surat')
-                        ->label('No Surat')
-                        ->unique(ignoreRecord: true),
+                    // TextInput::make('no_surat')
+                    //     ->label('No Surat')
+                    //     ->unique(ignoreRecord: true),
 
-                    TextInput::make('keperluan')
-                        ->label('Keperluan'),
-                    DatePicker::make('tanggal_surat')
-                        ->label('Tanggal Surat'),
+                    // TextInput::make('keperluan')
+                    //     ->label('Keperluan'),
+                    // DatePicker::make('tanggal_surat')
+                    //     ->label('Tanggal Surat'),
                 ])
                 ->columns(2),
 

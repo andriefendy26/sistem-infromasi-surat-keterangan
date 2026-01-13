@@ -271,7 +271,7 @@
 
     <div class="title">
         <div class="kepala">SURAT KETERANGAN DOKTER</div>
-        <p class="nomor">Nomor: {{ $surat ? $surat->no_surat : 'Belum diisi' }}</p>
+        <p class="nomor">Nomor: {{ $surat ? $surat->RegisSkd->nomor_kir : 'Belum diisi' }}</p>
     </div>
 
     <div class="sub-title">
@@ -441,8 +441,8 @@
                 <td width="50%" class="table-right">
                     <div class="signature-box">
                         <div class="signature-title">
-                            Tarakan, {{ $surat ? \Carbon\Carbon::parse($surat->tanggal_surat)->translatedFormat('d F Y') : 'Belum diisi' }}<br>
-                            Dokter Penguji Kesehatan
+                            Tarakan, {{ $surat ? \Carbon\Carbon::parse($surat->RegisSkd->tanggal)->translatedFormat('d F Y') : 'Belum diisi' }}<br>
+                            {{ $surat ? $surat->dokter->jabatan : 'Dokter Penguji Kesehatan' }}
                         </div>
                         <div class="signature-name">{{ $surat ? $surat->dokter->nama : 'dr. Rahim' }}</div>
                         <div class="">{{ $surat ? $surat->dokter->jabatan : 'Penata Muda Tk.I,III/b' }}</div>

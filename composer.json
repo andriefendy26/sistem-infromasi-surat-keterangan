@@ -12,7 +12,8 @@
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
         "mpdf/mpdf": "^8.2",
-        "nesbot/carbon": "^3.11"
+        "nesbot/carbon": "^3.11",
+        "openplain/filament-shadcn-theme": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

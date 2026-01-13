@@ -55,7 +55,7 @@ class dokterResource extends Resource
         return [
             'index' => Listdokters::route('/'),
             'create' => Createdokter::route('/create'),
-            'view' => Viewdokter::route('/{record}'),
+            // 'view' => Viewdokter::route('/{record}'),
             'edit' => Editdokter::route('/{record}/edit'),
         ];
     }

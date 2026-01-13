@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('no_reg')->unique()->nullable();
             $table->string('no_surat')->unique()->nullable();
             $table->string('keperluan')->nullable();
-            $table->date('tanggal_surat');
+            $table->date('tanggal_surat')->nullable();
 
             $table->string('nama')->nullable();
             $table->string('jenis_kelamin')->nullable();

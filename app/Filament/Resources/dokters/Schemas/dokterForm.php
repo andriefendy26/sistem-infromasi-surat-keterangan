@@ -21,6 +21,10 @@ class dokterForm
                         ->required()
                         ->maxLength(255),
 
+                    TextInput::make('pangkat')
+                        ->required()
+                        ->maxLength(255),
+
                     TextInput::make('jabatan')
                         ->required()
                         ->maxLength(255),

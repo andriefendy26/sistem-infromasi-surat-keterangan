@@ -13,6 +13,7 @@ class SuratKeteranganDokter extends Model
 
     protected $fillable = [
         'id_dokter',
+        'id_regis_skd',
         'no_reg',
         'no_surat',
         'keperluan',
@@ -40,5 +41,10 @@ class SuratKeteranganDokter extends Model
     public function dokter()
     {
         return $this->belongsTo(Dokter::class, 'id_dokter');
+    }
+
+    public function RegisSkd()
+    {
+        return $this->belongsTo(RegisSKD::class, 'id_regis_skd');
     }
 }
