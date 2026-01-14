@@ -26,6 +26,7 @@ class SuratKeteranganDokterForm
                         ->label('Dokter')
                         ->options(Dokter::query()->pluck('nama', 'id'))
                         // ->relationship('dokter', 'nama')
+                        ->default(1)
                         ->searchable()
                         ->live()
                         ->required(),
@@ -50,6 +51,7 @@ class SuratKeteranganDokterForm
                             ->required(),
                     TextInput::make('no_reg')
                         ->label('No Registrasi')
+                        ->default('00000')
                         ->unique(ignoreRecord: true),
 
                     // TextInput::make('no_surat')
@@ -72,18 +74,28 @@ class SuratKeteranganDokterForm
                                 'Laki-Laki' => 'Laki Laki',
                                 'Perempuan' => 'Perempuan'
                             ])
+                            ->default('Laki-Laki')
                             ->required(),
 
                         TextInput::make('tempat_lahir'),
 
                         DatePicker::make('tanggal_lahir'),
 
-                        TextInput::make('agama'),
+                        Select::make('agama')
+                            ->options([
+                                'Islam' => 'Islam',
+                                'Kristen' => 'Kristen',
+                                'Hindu' => 'Hindu',
+                                'Buddha' => 'Buddha',
+                                'Konghucu ' => 'Konghucu ',
+                            ])
+                             ->default('Islam'),
 
                         TextInput::make('pekerjaan')
                             ->required(),
 
                         Textarea::make('alamat')
+                        
                             ->columnSpanFull(),
                     ])
                     ->columns(2),
@@ -105,18 +117,38 @@ class SuratKeteranganDokterForm
                                 'Gemuk' => 'Gemuk',
                             ]),
 
-                        TextInput::make('golongan_darah'),
+                        Select::make('golongan_darah')
+                            ->options([
+                                'A' => 'A',
+                                'A+' => 'A+',
+                                'AB' => 'AB',
+                                'AB+' => 'AB+',
+                                'B' => 'B',
+                                'B+' => 'B+',
+                                'C' => 'C',
+                                'C+' => 'C+',
+                            ]),
 
-                        TextInput::make('hasil_tes_buta_warna'),
+                        // TextInput::make('hasil_tes_buta_warna'),
+                        Select::make('hasil_tes_buta_warna')
+                            ->options([
+                                'Tidak Ada Buta Warna' => 'Tidak Ada Buta Warna',
+                                'Buta Warna' => 'Buta Warna',
+                            ]),
                     ])
-                    ->columns(3),
+                    ->columns(2),
 
                 Section::make('Kesimpulan & Catatan')
                     ->schema([
-                        Textarea::make('kesimpulan')
-                            ->required()
-                            ->columnSpanFull(),
+                        // Textarea::make('kesimpulan')
+                        //     ->required()
+                        //     ->columnSpanFull(),
 
+                        Select::make('kesimpulan')
+                            ->options([
+                                'Sehat' => 'Sehat',
+                                'Tidak Sehat' => 'Tidak Sehat',
+                            ]),
                         // Select::make('catatan')
                         //     ->required()
                         //     ->options([
