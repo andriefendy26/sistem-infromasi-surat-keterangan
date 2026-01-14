@@ -5,6 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
+
+
 class SuratKeteranganDokter extends Model
 {
     use HasFactory;
@@ -46,5 +50,10 @@ class SuratKeteranganDokter extends Model
     public function RegisSkd()
     {
         return $this->belongsTo(RegisSKD::class, 'id_regis_skd');
+    }
+
+    public function catatans(): HasMany
+    {
+        return $this->hasMany(Catatan::class, 'id_skd', 'id');
     }
 }

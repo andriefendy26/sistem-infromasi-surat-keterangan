@@ -3,12 +3,16 @@
 namespace App\Filament\Resources\SuratKeteranganDokters\Schemas;
 
 use App\Models\Dokter;
+use App\Models\RegisSKD;
+use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Illuminate\Support\Facades\Date;
 
 class SuratKeteranganDokterForm
 {
@@ -33,8 +37,10 @@ class SuratKeteranganDokterForm
                     Select::make('id_regis_skd')
                         ->relationship('RegisSkd', 'nomor_kir')
                          ->createOptionForm([
-                                    DatePicker::make('tanggal')->required(),
-                                    TextInput::make('nomor_kir')->required(),
+                                    DatePicker::make('tanggal')->default(Date::now())->required(),
+                                        TextInput::make('nomor_kir')
+                                        ->default(fn () => '400.7/'. 0 . (RegisSKD::max('id') ?? 0) + 1 . '/UPTD-PKMPA')
+                                        ->required(),
                                     TextInput::make('keperluan')->required(),
                                     TextInput::make('penerima')->required(),
                             ])
@@ -111,22 +117,69 @@ class SuratKeteranganDokterForm
                             ->required()
                             ->columnSpanFull(),
 
-                        Select::make('catatan')
-                            ->required()
-                            ->options([
-                                'Memenuhi syarat untuk semua jenis pekerjaan'
-                                    => 'Memenuhi syarat untuk semua jenis pekerjaan',
-                                'Memenuhi syarat untuk pekerjaan tertentu'
-                                    => 'Memenuhi syarat untuk pekerjaan tertentu',
-                                'Harap kontrol penyakitnya'
-                                    => 'Harap kontrol penyakitnya',
-                            ]),
+                        // Select::make('catatan')
+                        //     ->required()
+                        //     ->options([
+                        //         'Memenuhi syarat untuk semua jenis pekerjaan'
+                        //             => 'Memenuhi syarat untuk semua jenis pekerjaan',
+                        //         'Memenuhi syarat untuk pekerjaan tertentu'
+                        //             => 'Memenuhi syarat untuk pekerjaan tertentu',
+                        //         'Harap kontrol penyakitnya'
+                        //             => 'Harap kontrol penyakitnya',
+                        //     ]),
 
-                        Textarea::make('catatan_tambahan')
-                            // ->required()
-                            ->columnSpanFull(),
+                        Repeater::make('catatans')
+                            ->relationship('catatans')
+                            ->label('Catatan')
+                            ->schema([
+                                Checkbox::make('dipilih')
+                                    ->label('Pilih')
+                                    ->inline(),
+                                TextInput::make('catatan')
+                                    ->label('Teks Catatan')
+                                    ->required()
+                                    ->columnSpanFull(),
+                            ])
+    
+                             ->default([
+                                [
+                                    'dipilih' => false,
+                                    'catatan' => 'Memenuhi syarat untuk semua jenis pekerjaan',
+                                ],
+                                [
+                                    'dipilih' => false,
+                                    'catatan' => 'Memenuhi syarat untuk pekerjaan tertentu',
+                                ],
+                                [
+                                    'dipilih' => false,
+                                    'catatan' => 'Harap kontrol penyakitnya',
+                                ],
+                            ])
+                            ->addActionLabel('Tambah Catatan')
+                            // ->columns(1)
+                            ->collapsible()
+                            ->itemLabel(fn (array $state): ?string => $state['catatan'] ?? null)
+                            ->mutateRelationshipDataBeforeCreateUsing(function (array $data): array {
+                                // Pastikan data sesuai dengan kolom database
+                                return [
+                                    'dipilih' => $data['dipilih'] ?? false,
+                                    'catatan' => $data['catatan'] ?? '',
+                                ];
+                            })
+                            ->mutateRelationshipDataBeforeFillUsing(function (array $data): array {
+                                return [
+                                    'dipilih' => $data['dipilih'] ?? false,
+                                    'catatan' => $data['catatan'] ?? '',
+                                ];
+                            }),
+                            // ->columns(2)
+                            // ->maxItems(3),
+
+                        // Textarea::make('catatan_tambahan')
+                        //     // ->required()
+                        //     ->columnSpanFull(),
                     ])
-                    ->columns(2),
+                    ,
                 ]);
     }
 }

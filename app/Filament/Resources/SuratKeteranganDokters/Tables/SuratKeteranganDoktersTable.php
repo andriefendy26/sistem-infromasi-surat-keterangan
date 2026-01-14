@@ -15,7 +15,7 @@ class SuratKeteranganDoktersTable
     {
         return $table
             ->columns([
-                TextColumn::make('no_surat')
+                TextColumn::make('RegisSkd.nomor_kir')
                     ->label('No Surat')
                     ->searchable()
                     ->sortable(),
@@ -34,7 +34,7 @@ class SuratKeteranganDoktersTable
                     ->searchable()
                     ->sortable(),
 
-                TextColumn::make('keperluan')
+                TextColumn::make('RegisSkd.keperluan')
                     ->limit(30)
                     ->toggleable(),
 

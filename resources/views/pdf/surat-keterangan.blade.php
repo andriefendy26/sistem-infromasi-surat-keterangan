@@ -16,7 +16,7 @@
         }
         body {
             font-family: Arial, Helvetica, sans-serif;
-            padding: 1.9cm 2.5cm;
+            padding: 1.6cm 2.5cm;
             font-size: 14px;
             line-height: 1;
         }
@@ -47,7 +47,7 @@
 
         .header img {
             position: absolute;
-            width: 70px;
+            width: 80px;
             /* height: 80px; */
             object-fit: cover;
         }
@@ -65,7 +65,7 @@
         }
 
         .header .uptd {
-            font-size: 16px;
+            font-size: 20px;
             font-weight: bold;
             color: black;
             /* margin: 3px 0; */
@@ -103,7 +103,7 @@
         .title .kepala {
             font-weight: bold;
             font-size: 14px;
-            /* margin-bottom: 5px; */
+            margin-bottom: 5px;
         }
 
         .title .nomor {
@@ -115,7 +115,7 @@
         .sub-title {
             text-align: justify;
             /* margin: 15px 0; */
-            line-height: 1.2;
+            line-height: 1.4;
         }
 
         /* Content */
@@ -179,8 +179,8 @@
         }
 
         .keperluan-section {
-            margin: 20px 0;
-            line-height: 1.6;
+            /* margin: 20px 0; */
+            /* line-height: 1.6; */
         }
 
         .keperluan-section p {
@@ -231,7 +231,7 @@
         }
 
         .signature-logo {
-            margin-top: 10px;
+            margin-top: 30px;
         }
 
         .signature-logo img {
@@ -260,13 +260,13 @@
             <img src="{{ asset('storage/gambar/logo-puskesmas.png') }}" class="logo-right" alt="Logo Puskesmas">
         </div>
         
-        <p>PEMERINTAH KOTA TARAKAN</p>
-        <p>DINAS KESEHATAN</p>
+        <p style="font-size : 16px">PEMERINTAH KOTA TARAKAN</p>
+        <p style="font-size : 16px">DINAS KESEHATAN</p>
         <h2 class="uptd">UPTD PUSKESMAS PANTAI AMAL</h2>
-        <p class="alamat">Jalan Sei Kayan RT 03 Kelurahan Pantai Amal</p>
-        <p class="alamat">Kota Tarakan 77129</p>
-        <p>Laman: <a href="http://dinkes.tarakankota.go.id/pkm-pa">http://dinkes.tarakankota.go.id/pkm-pa</a></p>
-        <p>Pos-el: <a href="mailto:pkm.pantaiamal@gmail.com">pkm.pantaiamal@gmail.com</a></p>
+        <p class="alamat" style="font-size : 16px">Jalan Sei Kayan RT 03 Kelurahan Pantai Amal</p>
+        <p class="alamat" sty   le="font-size : 16px">Kota Tarakan 77129</p>
+        <p style="font-size : 12px">Laman: <a href="http://dinkes.tarakankota.go.id/pkm-pa">http://dinkes.tarakankota.go.id/pkm-pa</a></p>
+        <p style="font-size : 12px">Pos-el: <a href="mailto:pkm.pantaiamal@gmail.com">pkm.pantaiamal@gmail.com</a></p>
     </div>
 
     <div class="title">
@@ -316,7 +316,7 @@
                 <table>
                     <tr>
                         <td class="data-label">Tinggi Badan</td>
-                        <td class="data-value">: {{ $surat ? $surat->tinggi_badan : 'Belum diisi' }} Cm</td>
+                        <td class="data-value">: {{ $surat ? $surat->tinggi_badan : 'Belum diisi' }} cm</td>
                     </tr>
                 </table>
             </div>
@@ -324,7 +324,7 @@
                 <table>
                     <tr>
                         <td class="data-label">Berat Badan</td>
-                        <td class="data-value">: {{ $surat ? $surat->berat_badan : 'Belum diisi' }} Kg</td>
+                        <td class="data-value">: {{ $surat ? $surat->berat_badan : 'Belum diisi' }} kg</td>
                     </tr>
                 </table>
             </div>
@@ -345,7 +345,7 @@
                         <td class="data-value">
                             :
                             @foreach ($options as $key => $option )                       
-                                <span class="{{ $surat->status_gizi !== $option && $option !== '/'  ? 'coret' : '' }}">
+                                <span class="{{ strtolower($surat->status_gizi) !== strtolower($option) && $option !== '/'  ? 'coret' : '' }}">
                                     {{ $option }}
                                     {{-- {{dd($options)}} --}}
                                 </span>    
@@ -397,7 +397,7 @@
                 </table>
             </div>
 
-            <div class="catatan-list">
+            {{-- <div class="catatan-list">
                 <p class="dengancatatan">Dengan catatan :</p>
                 @php
                     $options = [
@@ -418,13 +418,39 @@
                         d. {{$surat->catatan_tambahan}}
                     </p>
                 @endif
+            </div> --}}
+            <div class="catatan-list">
+                <p class="dengancatatan">Dengan catatan :</p>
+
+                @php
+                    $catatans = $surat->catatans ?? collect();
+                @endphp
+
+                @if($catatans->count() > 0)
+                    @foreach($catatans as $index => $catatan)
+                        <p class="{{ $catatan->dipilih ? 'font-bold underline' : '' }}">
+                            {{ chr(97 + $index) }}. {{ $catatan->catatan }}
+                        </p>
+                    @endforeach
+                @else
+                    {{-- Fallback jika tidak ada catatan --}}
+                    <p>a. Memenuhi syarat untuk semua jenis pekerjaan</p>
+                    <p>b. Memenuhi sya  rat untuk pekerjaan tertentu</p>
+                    <p>c. Harap kontrol penyakitnya</p>
+                @endif
+
+                @if (!empty($surat->catatan_tambahan))
+                    <p class="font-bold underline">
+                        {{ chr(97 + $catatans->count()) }}. {{ $surat->catatan_tambahan }}
+                    </p>
+                @endif
             </div>
         </div>
     </div>
 
     <div class="keperluan-section">
         <p class="font-bold">
-            Surat keterangan ini dibuat untuk keperluan : {{ $surat ? $surat->keperluan : 'Belum diisi' }} 
+            Surat keterangan ini dibuat untuk keperluan : {{ $surat ? $surat->RegisSkd->keperluan : 'Belum diisi' }} 
         </p>
         <p>
             Surat Keterangan ini berlaku 6 (Enam) bulan sejak dikeluarkan.
@@ -465,9 +491,9 @@
     </div>
 
 </body>
-{{-- <script>
+<script>
     window.onload = function () {
         window.print();
     }
-</script> --}}
+</script>
 </html>
