@@ -17,9 +17,9 @@ class doktersTable
             ->columns([
                 //
                 TextColumn::make('nama')
-                ->label('Nama Dokter')
-                ->searchable()
-                ->sortable(),
+                    ->label('Nama Dokter')
+                    ->searchable()
+                    ->sortable(),
 
                 TextColumn::make('jabatan')
                     ->searchable()

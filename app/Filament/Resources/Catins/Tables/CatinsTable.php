@@ -15,8 +15,14 @@ class CatinsTable
         return $table
             ->columns([
                 //
-                TextColumn::make('nama')->label('Nama Pasien'),
-                TextColumn::make('regisCatin.nomor_kir'),
+                TextColumn::make('nama')
+                    ->label('Nama Catin'),
+                TextColumn::make('id_regis_catin')
+                    // ->relation('id_regis_catin' , 'nomor_kir')
+                    ->label('Nomor Kir'),
+                
+                TextColumn::make('tempat_lahir'),
+                TextColumn::make('tanggal_lahir'),
                 // TextColumn::make('bidan.nama'),
 
             ])

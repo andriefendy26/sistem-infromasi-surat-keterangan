@@ -18,4 +18,8 @@ class RegisCatin extends Model
         'penerima'
     ];
 
+    public function Catin()
+    {
+        return $this->hasMany(Catin::class);
+    }
 }

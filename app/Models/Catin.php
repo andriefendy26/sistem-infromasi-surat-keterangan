@@ -29,7 +29,7 @@ class Catin extends Model
     }
     public function regisCatin()
     {
-        return $this->belongsTo(RegisCatin::class);
+        return $this->belongsTo(RegisCatin::class, 'id_regis_catin');
     }
 
 }
