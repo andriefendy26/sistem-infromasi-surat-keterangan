@@ -55,6 +55,17 @@ class CatinForm
                             ->label('Pekerjaan'),
                         TextInput::make('alamat')
                             ->label('Alamat'),
+                        Select::make('suntik')
+                            ->options([
+                                '' => '',
+                                '1 (Kali)' => '1 (Kali)',
+                                '2 (Kali)' => '2 (Kali)',
+                                '3 (Kali)' => '3 (Kali)',
+                                '4 (Kali)' => '4 (Kali)',
+                                '5 (Kali)' => '5 (Kali)',
+                                '6 (Kali)' => '6 (Kali)',
+                            ])
+                            ->label('Suntik'),
                         TextInput::make('catatan')
                             ->label('Catatan'),
                     ])->columns(2)

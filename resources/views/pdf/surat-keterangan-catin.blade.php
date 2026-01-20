@@ -17,7 +17,7 @@
         body {
             font-family: Arial, Helvetica, sans-serif;
             padding: 1.6cm 2.5cm;
-            font-size: 14px;
+            font-size: 15px;
             line-height: 1;
         }
 
@@ -189,12 +189,20 @@
 
         /* Signature - Gunakan table untuk positioning */
         .signature {
+            /* text-align: center; */
             margin-top: 30px;
-            margin-right: 0px;
+            /* margin-right: 0px; */
             width: 100%;
+            /* display: flex; */
+            /* justify-content: space-between; */
+            /* place-content: center; */
         }
 
         .signature .table-right {
+            position: relative;
+            /* border: 1px solid; */
+        }
+        .signature .table-left {
             position: relative;
         }
         
@@ -204,13 +212,13 @@
         }
         
         .signature-box {
-            position: absolute;
-            right: 0;
+            /* position: absolute; */
+            /* right: 0; */
             /* border: 2px#000000 ; */
             border-width: 2px;
             border: black;
-            text-align: left;
-            vertical-align: right;
+            text-align: center;
+            /* vertical-align: right; */
         }
 
         .signature-title {
@@ -239,7 +247,6 @@
             height: auto;
         }
         
-
         .coret {
             text-decoration: line-through;
         }
@@ -253,7 +260,7 @@
     </style>
 </head>
 <body>
-    <div class="noreg">No.Reg: {{$surat->no_reg ? 0000 : 0000 }}</div>
+    {{-- <div class="noreg">No.Reg: {{$surat->no_reg ? 0000 : 0000 }}</div> --}}
     <div class="header">
         <div class="logo-container">
             <img src="{{ asset('storage/gambar/logo-tarakan.png') }}" class="logo-left" alt="Logo Tarakan">
@@ -392,58 +399,63 @@
                 @endif
             </div> --}}
             <div class="catatan-list">
-                <p class="dengancatatan">Dengan catatan :</p>
+                {{-- <p class="dengancatatan">Dengan catatan :</p> --}}
+                <p class="dengancatatan">Bahwa yang bersangkutan tersebut diatas 
+                    <strong>
+                        telah melakukan Konseling dan Test Sukarela HIV AIDS
+                    </strong>
+                    di Puskesmas Pantai Amal pada hari Senin tanggal 17 November 2025 </p>
+                <p>
+                    {{-- Suntik TT : 1 (Satu) --}}
+                    @if (!empty($surat->suntik))
+                        Suntik TT : {{ $surat->suntik }}
+                    @else
+                        {{ null }}
+                    @endif
+                </p>
+            </div>
 
-                @php
-                    $catatans = $surat->catatans ?? collect();
-                @endphp
-
-                @if($catatans->count() > 0)
-                    @foreach($catatans as $index => $catatan)
-                        <p class="{{ $catatan->dipilih ? 'font-bold underline' : '' }}">
-                            {{ chr(97 + $index) }}. {{ $catatan->catatan }}
-                        </p>
-                    @endforeach
-                @else
-                    {{-- Fallback jika tidak ada catatan --}}
-                    <p>a. Memenuhi syarat untuk semua jenis pekerjaan</p>
-                    <p>b. Memenuhi sya  rat untuk pekerjaan tertentu</p>
-                    <p>c. Harap kontrol penyakitnya</p>
-                @endif
-
-                @if (!empty($surat->catatan_tambahan))
-                    <p class="font-bold underline">
-                        {{ chr(97 + $catatans->count()) }}. {{ $surat->catatan_tambahan }}
-                    </p>
-                @endif
+            <div class="catatan-list">
+                {{-- <p class="dengancatatan">Dengan catatan :</p> --}}
+                <p class="dengancatatan">Demikian surat keterangan ini dibuat untuk diketahui dan dipergunakan sebagaimana mestinya.</p>
             </div>
         </div>
     </div>
 
-    <div class="keperluan-section">
-        <p class="font-bold">
-            Surat keterangan ini dibuat untuk keperluan : {{ $surat->regisCatin->keperluan ? $surat->regisCatin->keperluan : 'Belum diisi' }} 
-        </p>
-        <p>
-            Surat Keterangan ini berlaku 6 (Enam) bulan sejak dikeluarkan.
-        </p>
-        <p>
-            Demikian surat keterangan ini dibuat untuk diketahui dan dipergunakan sebagaimana mestinya.
-        </p>
-    </div>
 
     <div class="signature">
         <table>
             <tr>
-                <td width="50%"></td>
-                <td width="50%" class="table-right">
+                <td width="40%" class="table-left">
+                      <div class="signature-box">
+                        <div class="signature-title">
+                            {{-- Tarakan, {{ $surat->regisCatin->tanggal ? \Carbon\Carbon::parse($surat->regisCatin->tanggal)->translatedFormat('d F Y') : 'Belum diisi' }}<br> --}}
+                            <p>Mengetahui</p>
+                            {{-- {{ $surat->bidan->jabatan ? $surat->bidan->jabatan : 'Dokter Penguji Kesehatan' }} --}}
+                            <p>Kepala Puskesmas</p>
+                        </div>
+                        <div class="signature-name">drg.Desianti</div>
+                        {{-- <div class="">{{ $surat ? $surat->bidan->jabatan : 'Penata Muda Tk.I,III/b' }}</div> --}}
+                        <div class="signature-id">
+                            NIP. 197512082010012002
+                        </div>
+                        {{-- <div class="signature-logo">
+                            <img src="{{ asset('storage/gambar/berakhlak2.png') }}" alt="BerAKHLAK">
+                        </div> --}}
+                    </div>
+                </td>
+                <td width="20%">
+                    {{-- Kosongkan untuk jarak --}}
+
+                </td>
+                <td width="40%" class="table-right">
                     <div class="signature-box">
                         <div class="signature-title">
                             Tarakan, {{ $surat->regisCatin->tanggal ? \Carbon\Carbon::parse($surat->regisCatin->tanggal)->translatedFormat('d F Y') : 'Belum diisi' }}<br>
                             {{ $surat->bidan->jabatan ? $surat->bidan->jabatan : 'Dokter Penguji Kesehatan' }}
                         </div>
                         <div class="signature-name">{{ $surat->bidan->nama ? $surat->bidan->nama : 'dr. Rahim' }}</div>
-                        <div class="">{{ $surat ? $surat->bidan->jabatan : 'Penata Muda Tk.I,III/b' }}</div>
+                        {{-- <div class="">{{ $surat ? $surat->bidan->jabatan : 'Penata Muda Tk.I,III/b' }}</div> --}}
                         <div class="signature-id">
                             @if(!empty($surat->bidan->nip))
                                 NIP. {{ $surat->bidan->nip }}
@@ -453,13 +465,19 @@
                                 -
                             @endif
                         </div>
-                        <div class="signature-logo">
-                            <img src="{{ asset('storage/gambar/berakhlak2.png') }}" alt="BerAKHLAK">
-                        </div>
                     </div>
                 </td>
             </tr>
         </table>
+    </div>
+    <div class="" >
+        <img src="{{ asset('storage/gambar/berakhlak2.png') }}" alt="BerAKHLAK" style="
+        position : absolute;
+        right : 60px;
+        bottom : 40px;
+        width : 300px;
+        /* height : 100px; */
+    ">
     </div>
 
 </body>

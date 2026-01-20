@@ -18,6 +18,7 @@ class Catin extends Model
         'pekerjaan',
         'alamat',
         'catatan',
+        'suntik',
 
         'id_bidan',
         'id_regis_catin'
